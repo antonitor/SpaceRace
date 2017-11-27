@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -161,7 +163,7 @@ public class GameScreen implements Screen {
                 updateReady();
                 break;
             case PAUSE:
-                updatePause(delta);
+                updatePause();
                 break;
         }
 
@@ -180,6 +182,7 @@ public class GameScreen implements Screen {
     }
 
     private void updateRunning(float delta) {
+        currentState = GameState.RUNNING;
         stage.act(delta);
 
         //TODO Exercici 2 - Mostrem el botó pause
@@ -197,13 +200,17 @@ public class GameScreen implements Screen {
     }
 
     //TODO Exercici2 - Pausem el joc
-    private void updatePause(float delta) {
+    private void updatePause() {
+        //
+        currentState = GameState.PAUSE;
         // Amaguem el botó pause
         pauseButton.setStatus(PauseButton.Status.HIDDEN);
         // Dibuixem el text Pause
         batch.begin();
         AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
+
+        //spacecraft.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.alpha(0f, 0.5f * delta), Actions.alpha(1f, 0.5f * delta))));
     }
 
     private void updateGameOver(float delta) {

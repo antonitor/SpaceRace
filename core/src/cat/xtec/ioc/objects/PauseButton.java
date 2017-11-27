@@ -42,6 +42,7 @@ public class PauseButton extends Actor {
                 batch.draw(AssetManager.pauseButton, position.x, position.y, width, height);
                 break;
             case HIDDEN:
+                //No dibuixem res
                 break;
         }
     }
