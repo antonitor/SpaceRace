@@ -29,17 +29,16 @@ public class AssetManager {
     public static Sound explosionSound;
     public static Music music;
 
+    //Pause
+    public static TextureRegion pauseButton;
+
     // Font
     public static BitmapFont font;
     public static BitmapFont font2;
 
-    private int scftHght = 15;
-    private int astrHght = 34;
-
-
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        sheet = new Texture(Gdx.files.internal("sheet.png"));
+        sheet = new Texture(Gdx.files.internal("sheet3.png"));
         sheet.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         // Sprites de la nau
@@ -101,6 +100,11 @@ public class AssetManager {
         //TODO Exercici 1 - b) Afegim una nova font per al segón títol del SplashScreen
         font2 = new BitmapFont(fontFile, true);
         font2.getData().setScale(0.2f);
+
+        //TODO Exercici 2 - Sprite del botó pause
+        /*******************************Pause***************************************/
+        pauseButton = new TextureRegion(sheet, 480, 177, 50, 50);
+        pauseButton.flip(false, true);
     }
 
     public static void dispose() {

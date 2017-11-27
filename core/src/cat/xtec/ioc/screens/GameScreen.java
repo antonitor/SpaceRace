@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.helpers.InputHandler;
 import cat.xtec.ioc.objects.Asteroid;
+import cat.xtec.ioc.objects.PauseButton;
 import cat.xtec.ioc.objects.ScrollHandler;
 import cat.xtec.ioc.objects.Spacecraft;
 import cat.xtec.ioc.utils.Settings;
@@ -23,7 +24,7 @@ public class GameScreen implements Screen {
     // Els estats del joc
     public enum GameState {
 
-        READY, RUNNING, GAMEOVER
+        READY, RUNNING, GAMEOVER, PAUSE
 
     }
 
@@ -34,6 +35,10 @@ public class GameScreen implements Screen {
     private Spacecraft spacecraft;
     private ScrollHandler scrollHandler;
 
+
+    //TODO - Exercici 2
+    private PauseButton pauseButton;
+
     // Encarregats de dibuixar elements per pantalla
     private ShapeRenderer shapeRenderer;
     private Batch batch;
@@ -42,7 +47,7 @@ public class GameScreen implements Screen {
     private float explosionTime = 0;
 
     // Preparem el textLayout per escriure text
-    private GlyphLayout textLayout;
+    private GlyphLayout textLayout, pauseLayout;
 
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
 
@@ -60,16 +65,26 @@ public class GameScreen implements Screen {
         // Creem la nau i la resta d'objectes
         spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT);
         scrollHandler = new ScrollHandler();
+        //TODO - Exercici 2: Creem botó pause
+        pauseButton = new PauseButton(Settings.PAUSE_BUTTON_X, Settings.PAUSE_BUTTON_Y, Settings.PAUSE_BUTTON_WIDTH, Settings.PAUSE_BUTTON_HEIGHT);
+
 
         // Afegim els actors a l'stage
         stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
         // Donem nom a l'Actor
         spacecraft.setName("spacecraft");
+        //TODO - Exercici 2: Afegim el boto pause a l'stage i li donem nom
+        stage.addActor(pauseButton);
+        pauseButton.setName("pause");
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
         textLayout.setText(AssetManager.font, "Are you\nready?");
+
+        //TODO Exercici2 - GlyphLayout per el text Pause
+        pauseLayout = new GlyphLayout();
+        pauseLayout.setText(AssetManager.font, "Pause");
 
         currentState = GameState.READY;
 
@@ -136,7 +151,6 @@ public class GameScreen implements Screen {
 
         // Depenent de l'estat del joc farem unes accions o unes altres
         switch (currentState) {
-
             case GAMEOVER:
                 updateGameOver(delta);
                 break;
@@ -146,7 +160,9 @@ public class GameScreen implements Screen {
             case READY:
                 updateReady();
                 break;
-
+            case PAUSE:
+                updatePause(delta);
+                break;
         }
 
         //drawElements();
@@ -166,6 +182,9 @@ public class GameScreen implements Screen {
     private void updateRunning(float delta) {
         stage.act(delta);
 
+        //TODO Exercici 2 - Mostrem el botó pause
+        pauseButton.setStatus(PauseButton.Status.SHOWN);
+
         if (scrollHandler.collides(spacecraft)) {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
             AssetManager.explosionSound.play();
@@ -173,6 +192,18 @@ public class GameScreen implements Screen {
             textLayout.setText(AssetManager.font, "Game Over :'(");
             currentState = GameState.GAMEOVER;
         }
+
+
+    }
+
+    //TODO Exercici2 - Pausem el joc
+    private void updatePause(float delta) {
+        // Amaguem el botó pause
+        pauseButton.setStatus(PauseButton.Status.HIDDEN);
+        // Dibuixem el text Pause
+        batch.begin();
+        AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
+        batch.end();
     }
 
     private void updateGameOver(float delta) {
@@ -251,5 +282,9 @@ public class GameScreen implements Screen {
 
     public void setCurrentState(GameState currentState) {
         this.currentState = currentState;
+    }
+
+    public PauseButton getPauseButton() {
+        return pauseButton;
     }
 }

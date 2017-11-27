@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import cat.xtec.ioc.objects.PauseButton;
 import cat.xtec.ioc.objects.Spacecraft;
 import cat.xtec.ioc.screens.GameScreen;
+import cat.xtec.ioc.utils.Settings;
 
 public class InputHandler implements InputProcessor {
 
@@ -17,6 +19,7 @@ public class InputHandler implements InputProcessor {
     private Spacecraft spacecraft;
     private GameScreen screen;
     private Vector2 stageCoord;
+    private PauseButton pauseButton;
 
     private Stage stage;
 
@@ -25,7 +28,10 @@ public class InputHandler implements InputProcessor {
         // Obtenim tots els elements necessaris
         this.screen = screen;
         spacecraft = screen.getSpacecraft();
+        //TODO - Exercici2
+        pauseButton = screen.getPauseButton();
         stage = screen.getStage();
+
 
     }
 
@@ -55,16 +61,22 @@ public class InputHandler implements InputProcessor {
                 break;
             case RUNNING:
                 previousY = screenY;
-
                 stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
                 Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
-                if (actorHit != null)
+                if (actorHit != null) {
                     Gdx.app.log("HIT", actorHit.getName());
+                    if (actorHit.getName().equals("pause")) {
+                        screen.setCurrentState(GameScreen.GameState.PAUSE);
+                    }
+                }
+
                 break;
             // Si l'estat és GameOver tornem a iniciar el joc
             case GAMEOVER:
                 screen.reset();
                 break;
+            case PAUSE:
+                screen.setCurrentState(GameScreen.GameState.RUNNING);
         }
 
         return true;
