@@ -170,7 +170,7 @@ public class Spacecraft extends Actor {
         this.addAction(parpadeig);
     }
 
-    //TODO Exercici 2 - Eliminem l'acció de parpadeig quan finalitzem la pausa
+    //TODO Exercici 2 - Eliminem l'acció de parpadeig quan surt de la pausa
     public void resume(){
         // Tornam alpha a 1
         this.addAction(Actions.alpha(1f));
