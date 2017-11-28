@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -50,6 +49,7 @@ public class GameScreen implements Screen {
 
     // Preparem el textLayout per escriure text
     private GlyphLayout textLayout, pauseLayout;
+    private RepeatAction parpadeig;
 
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
 
@@ -95,51 +95,6 @@ public class GameScreen implements Screen {
 
     }
 
-    private void drawElements() {
-
-        // Recollim les propietats del Batch de l'Stage
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-
-        // Pintem el fons de negre per evitar el "flickering"
-        //Gdx.gl20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        //Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // Inicialitzem el shaperenderer
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-        // Definim el color (verd)
-        shapeRenderer.setColor(new Color(0, 1, 0, 1));
-
-        // Pintem la nau
-        shapeRenderer.rect(spacecraft.getX(), spacecraft.getY(), spacecraft.getWidth(), spacecraft.getHeight());
-
-        // Recollim tots els Asteroid
-        ArrayList<Asteroid> asteroids = scrollHandler.getAsteroids();
-        Asteroid asteroid;
-
-        for (int i = 0; i < asteroids.size(); i++) {
-
-            asteroid = asteroids.get(i);
-            switch (i) {
-                case 0:
-                    shapeRenderer.setColor(1, 0, 0, 1);
-                    break;
-                case 1:
-                    shapeRenderer.setColor(0, 0, 1, 1);
-                    break;
-                case 2:
-                    shapeRenderer.setColor(1, 1, 0, 1);
-                    break;
-                default:
-                    shapeRenderer.setColor(1, 1, 1, 1);
-                    break;
-            }
-            shapeRenderer.circle(asteroid.getX() + asteroid.getWidth() / 2, asteroid.getY() + asteroid.getWidth() / 2, asteroid.getWidth() / 2);
-        }
-        shapeRenderer.end();
-    }
-
-
     @Override
     public void show() {
 
@@ -163,7 +118,7 @@ public class GameScreen implements Screen {
                 updateReady();
                 break;
             case PAUSE:
-                updatePause();
+                updatePause(delta);
                 break;
         }
 
@@ -200,16 +155,15 @@ public class GameScreen implements Screen {
     }
 
     //TODO Exercici2 - Pausem el joc
-    private void updatePause() {
-        //
-        currentState = GameState.PAUSE;
-        // Amaguem el botó pause
-        pauseButton.setStatus(PauseButton.Status.HIDDEN);
-        // Dibuixem el text Pause
+    private void updatePause(float delta) {
+
+        spacecraft.act(delta);
+
         batch.begin();
         AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
 
+        //spacecraft.pause(delta);
         //spacecraft.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.alpha(0f, 0.5f * delta), Actions.alpha(1f, 0.5f * delta))));
     }
 

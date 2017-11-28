@@ -19,7 +19,6 @@ public class InputHandler implements InputProcessor {
     private Spacecraft spacecraft;
     private GameScreen screen;
     private Vector2 stageCoord;
-    private PauseButton pauseButton;
 
     private Stage stage;
 
@@ -28,8 +27,6 @@ public class InputHandler implements InputProcessor {
         // Obtenim tots els elements necessaris
         this.screen = screen;
         spacecraft = screen.getSpacecraft();
-        //TODO - Exercici2
-        pauseButton = screen.getPauseButton();
         stage = screen.getStage();
 
 
@@ -67,6 +64,8 @@ public class InputHandler implements InputProcessor {
                     Gdx.app.log("HIT", actorHit.getName());
                     if (actorHit.getName().equals("pause")) {
                         screen.setCurrentState(GameScreen.GameState.PAUSE);
+                        screen.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
+                        screen.getSpacecraft().pause();
                     }
                 }
 
@@ -76,6 +75,7 @@ public class InputHandler implements InputProcessor {
                 screen.reset();
                 break;
             case PAUSE:
+                spacecraft.resume();
                 screen.setCurrentState(GameScreen.GameState.RUNNING);
         }
 
