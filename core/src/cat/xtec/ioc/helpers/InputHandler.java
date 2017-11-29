@@ -62,21 +62,19 @@ public class InputHandler implements InputProcessor {
                 Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
                 if (actorHit != null) {
                     Gdx.app.log("HIT", actorHit.getName());
+                    //Todo Exercici 2 - Si es fa clic sobre el botó pause pausem el joc
                     if (actorHit.getName().equals("pause")) {
-                        screen.setCurrentState(GameScreen.GameState.PAUSE);
-                        screen.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
-                        screen.getSpacecraft().pause();
+                        screen.pauseGame();
                     }
                 }
-
                 break;
             // Si l'estat és GameOver tornem a iniciar el joc
             case GAMEOVER:
                 screen.reset();
                 break;
+            //Todo Exercici 2 - Si fem clic sobre la pantalla durant l'estat pausat reprenem el joc
             case PAUSE:
-                spacecraft.resume();
-                screen.setCurrentState(GameScreen.GameState.RUNNING);
+                screen.resumeGame();
         }
 
         return true;

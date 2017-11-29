@@ -9,11 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.utils.Methods;
 import cat.xtec.ioc.utils.Settings;
 
 public class Spacecraft extends Actor {
@@ -27,7 +26,11 @@ public class Spacecraft extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
-    private RepeatAction parpadeig;
+
+    //TODO Exercici 2
+    private RepeatAction parpalleig;
+    private boolean paused = false;
+    private int lastDirection = SPACECRAFT_STRAIGHT;
 
     private Rectangle collisionRect;
 
@@ -48,46 +51,30 @@ public class Spacecraft extends Actor {
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
 
-        //TODO - Exercici 2 : Acció de parpalleig:
-        // Alpha a 0.5
-        AlphaAction alphaAction1 = new AlphaAction();
-        alphaAction1.setAlpha(0.5f);
-        alphaAction1.setDuration(0.2f);
+        parpalleig = Methods.getParpalleig();
 
-        // Alpha a 1.0
-        AlphaAction alphaAction2 = new AlphaAction();
-        alphaAction2.setAlpha(1f);
-        alphaAction2.setDuration(0.2f);
 
-        // Sequencia de alpha 0.5 a alpha 1.0
-        SequenceAction sequencia = new SequenceAction();
-        sequencia.addAction(alphaAction1);
-        sequencia.addAction(alphaAction2);
-
-        // Repetició de la seqüencia
-        parpadeig = new RepeatAction();
-        parpadeig.setCount(RepeatAction.FOREVER);
-        parpadeig.setAction(sequencia);
     }
 
     public void act(float delta) {
         super.act(delta);
         // Movem la spacecraft depenent de la direcció controlant que no surti de la pantalla
-        switch (direction) {
-            case SPACECRAFT_UP:
-                if (this.position.y - Settings.SPACECRAFT_VELOCITY * delta >= 0) {
-                    this.position.y -= Settings.SPACECRAFT_VELOCITY * delta;
-                }
-                break;
-            case SPACECRAFT_DOWN:
-                if (this.position.y + height + Settings.SPACECRAFT_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y += Settings.SPACECRAFT_VELOCITY * delta;
-                }
-                break;
-            case SPACECRAFT_STRAIGHT:
-                break;
+        if (!paused) {
+            switch (direction) {
+                case SPACECRAFT_UP:
+                    if (this.position.y - Settings.SPACECRAFT_VELOCITY * delta >= 0) {
+                        this.position.y -= Settings.SPACECRAFT_VELOCITY * delta;
+                    }
+                    break;
+                case SPACECRAFT_DOWN:
+                    if (this.position.y + height + Settings.SPACECRAFT_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                        this.position.y += Settings.SPACECRAFT_VELOCITY * delta;
+                    }
+                    break;
+                case SPACECRAFT_STRAIGHT:
+                    break;
+            }
         }
-
 
 
         collisionRect.set(position.x, position.y + 3, width, 10);
@@ -130,13 +117,18 @@ public class Spacecraft extends Actor {
     // Obtenim el TextureRegion depenent de la posició de la spacecraft
     public TextureRegion getSpacecraftTexture() {
 
+        if (paused) {
+            direction = lastDirection;
+        }
         switch (direction) {
-
             case SPACECRAFT_STRAIGHT:
+                this.lastDirection = SPACECRAFT_STRAIGHT;
                 return AssetManager.spacecraft;
             case SPACECRAFT_UP:
+                this.lastDirection = SPACECRAFT_UP;
                 return AssetManager.spacecraftUp;
             case SPACECRAFT_DOWN:
+                this.lastDirection = SPACECRAFT_DOWN;
                 return AssetManager.spacecraftDown;
             default:
                 return AssetManager.spacecraft;
@@ -165,17 +157,19 @@ public class Spacecraft extends Actor {
     }
 
 
-    //TODO Exercici 2 - Afegim parpalleig a la nau durant l'estat de pausa
+    //TODO Exercici 2 - Afegim acció parpalleig a la nau durant l'estat de pausa
     public void pause() {
-        this.addAction(parpadeig);
+        this.paused = true;
+        this.addAction(parpalleig);
     }
 
-    //TODO Exercici 2 - Eliminem l'acció de parpadeig quan surt de la pausa
+    //TODO Exercici 2 - Eliminem l'acció de parpalleig
     public void resume(){
+        this.paused = false;
         // Tornam alpha a 1
         this.addAction(Actions.alpha(1f));
         // Eliminem la seqüencia
-        this.removeAction(parpadeig);
+        this.removeAction(parpalleig);
     }
 
 }

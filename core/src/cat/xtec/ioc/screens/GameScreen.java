@@ -3,6 +3,7 @@ package cat.xtec.ioc.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -102,7 +103,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         // Dibuixem tots els actors de l'stage
         stage.draw();
 
@@ -158,7 +158,6 @@ public class GameScreen implements Screen {
     private void updatePause(float delta) {
 
         spacecraft.act(delta);
-
         batch.begin();
         AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
@@ -197,6 +196,20 @@ public class GameScreen implements Screen {
         // Posem a 0 les variables per controlar el temps jugat i l'animació de l'explosió
         explosionTime = 0.0f;
 
+    }
+
+    public void pauseGame() {
+        this.setCurrentState(GameScreen.GameState.PAUSE);
+        this.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
+        this.getSpacecraft().pause();
+        this.getScrollHandler().pause();
+
+    }
+
+    public void resumeGame() {
+        this.spacecraft.resume();
+        this.getScrollHandler().resume();
+        this.setCurrentState(GameScreen.GameState.RUNNING);
     }
 
 
