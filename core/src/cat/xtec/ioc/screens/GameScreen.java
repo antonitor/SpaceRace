@@ -154,7 +154,8 @@ public class GameScreen implements Screen {
     //TODO EXERCICI 2 - Durant l'estat de Pausa dibuixem el texte i actualitzem els actors que parpallegen
     private void updatePause(float delta) {
 
-        spacecraft.act(delta);
+        this.spacecraft.act(delta);
+
         batch.begin();
         AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
@@ -203,14 +204,12 @@ public class GameScreen implements Screen {
         this.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
         //Es truquen els mètodes pause dels actors que parpallejaràn
         this.getSpacecraft().pause();
-        this.getScrollHandler().pause();
     }
 
     //TODO EXERCICI 2 : Quan es surt de l'estat de pausa
     public void resumeGame() {
         //Es truquen els mètodes resume dels actors per que tornin a actuar
         this.spacecraft.resume();
-        this.getScrollHandler().resume();
         //Es posa l'estat d'aquesta classe a RUNNING
         this.setCurrentState(GameScreen.GameState.RUNNING);
         //Tornem a mostrem el botó pause mentre corre el joc

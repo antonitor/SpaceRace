@@ -22,11 +22,6 @@ public class ScrollHandler extends Group {
     // Objecte Random
     Random r;
 
-    //TODO EXERCICI 2 - Parpalleig pels asteroids
-    private RepeatAction parpalleig;
-    private boolean pause = false;
-
-
     public ScrollHandler() {
 
         // Creem els dos fons
@@ -65,34 +60,28 @@ public class ScrollHandler extends Group {
             // Afegim l'asteroide al grup d'actors
             addActor(asteroid);
         }
-
-        parpalleig = Methods.getParpalleig();
-
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
-        if (!pause) {
-            // Si algun element està fora de la pantalla, fem un reset de l'element.
-            if (bg.isLeftOfScreen()) {
-                bg.reset(bg_back.getTailX());
+        // Si algun element està fora de la pantalla, fem un reset de l'element.
+        if (bg.isLeftOfScreen()) {
+            bg.reset(bg_back.getTailX());
 
-            } else if (bg_back.isLeftOfScreen()) {
-                bg_back.reset(bg.getTailX());
+        } else if (bg_back.isLeftOfScreen()) {
+            bg_back.reset(bg.getTailX());
+        }
 
-            }
+        for (int i = 0; i < asteroids.size(); i++) {
 
-            for (int i = 0; i < asteroids.size(); i++) {
-
-                Asteroid asteroid = asteroids.get(i);
-                if (asteroid.isLeftOfScreen()) {
-                    if (i == 0) {
-                        asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
-                    } else {
-                        asteroid.reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
-                    }
+            Asteroid asteroid = asteroids.get(i);
+            if (asteroid.isLeftOfScreen()) {
+                if (i == 0) {
+                    asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
+                } else {
+                    asteroid.reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
                 }
             }
         }
@@ -123,24 +112,5 @@ public class ScrollHandler extends Group {
 
     public ArrayList<Asteroid> getAsteroids() {
         return asteroids;
-    }
-
-    //TODO EXERCICI 2 - Afegim acció parpalleig als asteroids durant l'estat de pausa
-    public void pause() {
-        pause = true;
-        for (Asteroid asteroid : getAsteroids()) {
-            asteroid.addAction(parpalleig);
-        }
-    }
-
-    //TODO EXERCICI 2 - Eliminem l'acció de parpalleig
-    public void resume(){
-        pause = false;
-        // Tornam alpha a 1
-        this.addAction(Actions.alpha(1f));
-        // Eliminem la seqüencia
-        for (Asteroid asteroid : getAsteroids()) {
-            asteroid.removeAction(parpalleig);
-        }
     }
 }

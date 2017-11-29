@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Scrollable extends Actor {
 
     protected Vector2 position;
+
     protected float velocity;
     protected float width;
     protected float height;
@@ -60,6 +61,4 @@ public class Scrollable extends Actor {
     public float getHeight() {
         return height;
     }
-
-
 }

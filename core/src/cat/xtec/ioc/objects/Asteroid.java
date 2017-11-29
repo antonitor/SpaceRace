@@ -23,7 +23,6 @@ public class Asteroid extends Scrollable {
     Random r;
 
     int assetAsteroid;
-    private RepeatAction parpalleig;
 
     public Asteroid(float x, float y, float width, float height, float velocity) {
         super(x, y, width, height, velocity);
@@ -87,8 +86,6 @@ public class Asteroid extends Scrollable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a);
         batch.draw(AssetManager.asteroid[assetAsteroid], position.x, position.y, this.getOriginX(), this.getOriginY(), width, height, this.getScaleX(), this.getScaleY(), this.getRotation());
     }
 
