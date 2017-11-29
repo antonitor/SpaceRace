@@ -15,7 +15,7 @@ import cat.xtec.ioc.utils.Settings;
  * Created by Toni on 27/11/2017.
  */
 
-//TODO Exercici 2 - Actor que defineix el botó pause. Te dos estats: SHOWN i HIDDEN
+//TODO EXERCICI 2 - Actor que defineix el botó pause. Te dos estats: SHOWN i HIDDEN
 
 public class PauseButton extends Actor {
 

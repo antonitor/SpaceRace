@@ -62,7 +62,7 @@ public class InputHandler implements InputProcessor {
                 Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
                 if (actorHit != null) {
                     Gdx.app.log("HIT", actorHit.getName());
-                    //Todo Exercici 2 - Si es fa clic sobre el botó pause pausem el joc
+                    //TODO EXERCICI 2 - Si es fa clic sobre el botó pause pausem el joc
                     if (actorHit.getName().equals("pause")) {
                         screen.pauseGame();
                     }
@@ -72,7 +72,7 @@ public class InputHandler implements InputProcessor {
             case GAMEOVER:
                 screen.reset();
                 break;
-            //Todo Exercici 2 - Si fem clic sobre la pantalla durant l'estat pausat reprenem el joc
+            //TODO EXERCICI 2 - Si fem clic sobre la pantalla durant l'estat pausat reprenem el joc
             case PAUSE:
                 screen.resumeGame();
         }

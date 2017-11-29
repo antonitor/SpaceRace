@@ -52,10 +52,10 @@ public class SplashScreen implements Screen {
         container.setTransform(true);
         container.center();
 
-        //TODO Exercici 1 - a) Modifiquem el titol per què es situï en 1/3 de la pantalla
+        //TODO EXERCICI 1 - a) Modifiquem el titol per què es situï en 1/3 de la pantalla
         container.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 3);
 
-        //TODO Exercici 1 - b) Afegim un segón títol situat en 5/6 de la pantalla i tamany de lletra 0.2f
+        //TODO EXERCICI 1 - b) Afegim un segón títol situat en 5/6 de la pantalla i tamany de lletra 0.2f
         textStyle = new Label.LabelStyle(AssetManager.font2, null);
         textLbl_2 = new Label("Tap Screen to Start", textStyle);
         Container container_2 = new Container(textLbl_2);
@@ -63,7 +63,7 @@ public class SplashScreen implements Screen {
         container_2.center();
         container_2.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT * 5 / 6);
 
-        //TODO Exercici 1 - c) Afegim una animació sobre el segón títol que aplica un efecte de parpadeig
+        //TODO EXERCICI 1 - c) Afegim una animació sobre el segón títol que aplica un efecte de parpadeig
         container_2.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.alpha(0f, 0.5f), Actions.alpha(1f, 0.5f))));
         stage.addActor(container_2);
 

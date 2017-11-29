@@ -22,7 +22,7 @@ public class ScrollHandler extends Group {
     // Objecte Random
     Random r;
 
-    //Todo Exercici2 : Parpalleig pels asteroids
+    //TODO EXERCICI 2 - Parpalleig pels asteroids
     private RepeatAction parpalleig;
     private boolean pause = false;
 
@@ -125,7 +125,7 @@ public class ScrollHandler extends Group {
         return asteroids;
     }
 
-    //TODO Exercici 2 - Afegim acció parpalleig a la nau durant l'estat de pausa
+    //TODO EXERCICI 2 - Afegim acció parpalleig als asteroids durant l'estat de pausa
     public void pause() {
         pause = true;
         for (Asteroid asteroid : getAsteroids()) {
@@ -133,7 +133,7 @@ public class ScrollHandler extends Group {
         }
     }
 
-    //TODO Exercici 2 - Eliminem l'acció de parpalleig
+    //TODO EXERCICI 2 - Eliminem l'acció de parpalleig
     public void resume(){
         pause = false;
         // Tornam alpha a 1

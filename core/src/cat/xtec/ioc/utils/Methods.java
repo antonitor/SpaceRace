@@ -15,7 +15,7 @@ public class Methods {
         return r.nextFloat() * (max - min) + min;
     }
 
-    //TODO - Exercici 2 : Acció de parpalleig:
+    //TODO EXERCICI 2 - Acció de parpalleig
     public static RepeatAction getParpalleig() {
         // Alpha a 0.5
         AlphaAction alphaAction1 = new AlphaAction();

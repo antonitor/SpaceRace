@@ -97,11 +97,11 @@ public class AssetManager {
         FileHandle fontFile = Gdx.files.internal("fonts/space.fnt");
         font = new BitmapFont(fontFile, true);
         font.getData().setScale(0.4f);
-        //TODO Exercici 1 - b) Afegim una nova font per al segón títol del SplashScreen
+        //TODO EXERCICI 1 - b) Afegim una nova font per al segón títol del SplashScreen
         font2 = new BitmapFont(fontFile, true);
         font2.getData().setScale(0.2f);
 
-        //TODO Exercici 2 - Sprite del botó pause
+        //TODO EXERCICI 2 - Sprite del botó pause
         /*******************************Pause***************************************/
         pauseButton = new TextureRegion(sheet, 480, 177, 50, 50);
         pauseButton.flip(false, true);

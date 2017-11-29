@@ -27,7 +27,7 @@ public class Spacecraft extends Actor {
     private int width, height;
     private int direction;
 
-    //TODO Exercici 2
+    //TODO EXERCICI 2 - Variables membre
     private RepeatAction parpalleig;
     private boolean paused = false;
     private int lastDirection = SPACECRAFT_STRAIGHT;
@@ -52,8 +52,6 @@ public class Spacecraft extends Actor {
         setTouchable(Touchable.enabled);
 
         parpalleig = Methods.getParpalleig();
-
-
     }
 
     public void act(float delta) {
@@ -117,9 +115,11 @@ public class Spacecraft extends Actor {
     // Obtenim el TextureRegion depenent de la posició de la spacecraft
     public TextureRegion getSpacecraftTexture() {
 
+        //TODO EXERCICI 2 - Si estem pausats no s'ha de canviar la possició de la nau
         if (paused) {
             direction = lastDirection;
         }
+
         switch (direction) {
             case SPACECRAFT_STRAIGHT:
                 this.lastDirection = SPACECRAFT_STRAIGHT;
@@ -136,7 +136,6 @@ public class Spacecraft extends Actor {
     }
 
     public void reset() {
-
         // La posem a la posició inicial i a l'estat normal
         position.x = Settings.SPACECRAFT_STARTX;
         position.y = Settings.SPACECRAFT_STARTY;
@@ -147,6 +146,7 @@ public class Spacecraft extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        //Per que no interfereixi els possibles canvis als colors del batch
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a);
         batch.draw(getSpacecraftTexture(), position.x, position.y, width, height);
@@ -157,13 +157,13 @@ public class Spacecraft extends Actor {
     }
 
 
-    //TODO Exercici 2 - Afegim acció parpalleig a la nau durant l'estat de pausa
+    //TODO EXERCICI 2 - Afegim acció parpalleig a la nau durant l'estat de pausa
     public void pause() {
         this.paused = true;
         this.addAction(parpalleig);
     }
 
-    //TODO Exercici 2 - Eliminem l'acció de parpalleig
+    //TODO EXERCICI 2 - Eliminem l'acció de parpalleig
     public void resume(){
         this.paused = false;
         // Tornam alpha a 1

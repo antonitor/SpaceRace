@@ -37,8 +37,7 @@ public class GameScreen implements Screen {
     private Spacecraft spacecraft;
     private ScrollHandler scrollHandler;
 
-
-    //TODO - Exercici 2
+    //TODO EXERCICI 2 : Variable per emmagatzemar l'actor PauseButton
     private PauseButton pauseButton;
 
     // Encarregats de dibuixar elements per pantalla
@@ -49,8 +48,10 @@ public class GameScreen implements Screen {
     private float explosionTime = 0;
 
     // Preparem el textLayout per escriure text
-    private GlyphLayout textLayout, pauseLayout;
-    private RepeatAction parpadeig;
+    private GlyphLayout textLayout;
+
+    //TODO EXERCICI 2 : GlyphLayout que ens ajudarà a centrar el texte "Pausa"
+    private GlyphLayout pauseLayout;
 
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
 
@@ -68,16 +69,15 @@ public class GameScreen implements Screen {
         // Creem la nau i la resta d'objectes
         spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT);
         scrollHandler = new ScrollHandler();
-        //TODO - Exercici 2: Creem botó pause
+        //TODO EXERCICI 2: Creem botó pause
         pauseButton = new PauseButton(Settings.PAUSE_BUTTON_X, Settings.PAUSE_BUTTON_Y, Settings.PAUSE_BUTTON_WIDTH, Settings.PAUSE_BUTTON_HEIGHT);
-
 
         // Afegim els actors a l'stage
         stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
         // Donem nom a l'Actor
         spacecraft.setName("spacecraft");
-        //TODO - Exercici 2: Afegim el boto pause a l'stage i li donem nom
+        //TODO EXERCICI 2: Afegim el boto pause a l'stage i li donem nom
         stage.addActor(pauseButton);
         pauseButton.setName("pause");
 
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
         textLayout = new GlyphLayout();
         textLayout.setText(AssetManager.font, "Are you\nready?");
 
-        //TODO Exercici2 - GlyphLayout per el text Pause
+        //TODO EXERCICI 2 - Afegim la font i el texte al GlyphLayout
         pauseLayout = new GlyphLayout();
         pauseLayout.setText(AssetManager.font, "Pause");
 
@@ -140,9 +140,6 @@ public class GameScreen implements Screen {
         currentState = GameState.RUNNING;
         stage.act(delta);
 
-        //TODO Exercici 2 - Mostrem el botó pause
-        pauseButton.setStatus(PauseButton.Status.SHOWN);
-
         if (scrollHandler.collides(spacecraft)) {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
             AssetManager.explosionSound.play();
@@ -154,7 +151,7 @@ public class GameScreen implements Screen {
 
     }
 
-    //TODO Exercici2 - Pausem el joc
+    //TODO EXERCICI 2 - Durant l'estat de Pausa dibuixem el texte i actualitzem els actors que parpallegen
     private void updatePause(float delta) {
 
         spacecraft.act(delta);
@@ -198,18 +195,26 @@ public class GameScreen implements Screen {
 
     }
 
+    //TODO EXERCICI 2 : Quan es prem el botó pausa s'executa aquest mètode
     public void pauseGame() {
+        //Es posa l'estat d'aquesta classe a PAUSE
         this.setCurrentState(GameScreen.GameState.PAUSE);
+        //S'amaga el botó Pause
         this.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
+        //Es truquen els mètodes pause dels actors que parpallejaràn
         this.getSpacecraft().pause();
         this.getScrollHandler().pause();
-
     }
 
+    //TODO EXERCICI 2 : Quan es surt de l'estat de pausa
     public void resumeGame() {
+        //Es truquen els mètodes resume dels actors per que tornin a actuar
         this.spacecraft.resume();
         this.getScrollHandler().resume();
+        //Es posa l'estat d'aquesta classe a RUNNING
         this.setCurrentState(GameScreen.GameState.RUNNING);
+        //Tornem a mostrem el botó pause mentre corre el joc
+        this.getPauseButton().setStatus(PauseButton.Status.SHOWN);
     }
 
 
