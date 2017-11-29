@@ -1,8 +1,12 @@
 package cat.xtec.ioc.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,12 +19,15 @@ public class ScrollHandler extends Group {
     // Fons de pantalla
     Background bg, bg_back;
 
-    // Asteroides
-    int numAsteroids;
-    private ArrayList<Asteroid> asteroids;
+    //private ArrayList<Asteroid> asteroids;
+    private DelayedRemovalArray<Asteroid> asteroids;
 
     // Objecte Random
     Random r;
+
+    //TODO EXERCICI 3 a)
+    long startTime = TimeUtils.nanoTime();
+    float randomInterval;
 
     public ScrollHandler() {
 
@@ -35,31 +42,10 @@ public class ScrollHandler extends Group {
         // Creem l'objecte random
         r = new Random();
 
-        // Comencem amb 3 asteroids
-        numAsteroids = 3;
+        //TODO EXERCICI 3 a)
+        asteroids = new DelayedRemovalArray<Asteroid>();
 
-        // Creem l'ArrayList
-        asteroids = new ArrayList<Asteroid>();
-
-        // Definim una mida aleatòria entre el mínim i el màxim
-        float newSize = Methods.randomFloat(Settings.MIN_ASTEROID, Settings.MAX_ASTEROID) * 34;
-
-        // Afegim el primer Asteroid a l'Array i al grup
-        Asteroid asteroid = new Asteroid(Settings.GAME_WIDTH, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
-        asteroids.add(asteroid);
-        addActor(asteroid);
-
-        // Des del segon fins l'últim asteroide
-        for (int i = 1; i < numAsteroids; i++) {
-            // Creem la mida al·leatòria
-            newSize = Methods.randomFloat(Settings.MIN_ASTEROID, Settings.MAX_ASTEROID) * 34;
-            // Afegim l'asteroid.
-            asteroid = new Asteroid(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
-            // Afegim l'asteroide a l'ArrayList
-            asteroids.add(asteroid);
-            // Afegim l'asteroide al grup d'actors
-            addActor(asteroid);
-        }
+        this.randomInterval = MathUtils.random(Settings.MIN_ASTEROID_INTERVAL, Settings.MAX_ASTEROID_INTERVAL);
     }
 
     @Override
@@ -74,15 +60,25 @@ public class ScrollHandler extends Group {
             bg_back.reset(bg.getTailX());
         }
 
-        for (int i = 0; i < asteroids.size(); i++) {
+        // TODO EXERICIC 3 a)
+        float elapsedTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime);
 
-            Asteroid asteroid = asteroids.get(i);
+        for (Asteroid asteroid : asteroids) {
             if (asteroid.isLeftOfScreen()) {
-                if (i == 0) {
-                    asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
-                } else {
-                    asteroid.reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
-                }
+                removeActor(asteroid);
+                asteroids.removeValue(asteroid, true);
+            }
+        }
+
+        // TODO EXERICIC 3 a)
+        if (elapsedTime >= randomInterval) {
+            this.randomInterval = MathUtils.random(Settings.MIN_ASTEROID_INTERVAL, Settings.MAX_ASTEROID_INTERVAL);
+            if (asteroids.size < Settings.MAX_ASTEROID_NUMBER) {
+                startTime = TimeUtils.nanoTime();
+                float newSize = Methods.randomFloat(Settings.MIN_ASTEROID, Settings.MAX_ASTEROID) * 34;
+                Asteroid a = new Asteroid(Settings.GAME_WIDTH, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
+                asteroids.add(a);
+                addActor(a);
             }
         }
     }
@@ -98,19 +94,16 @@ public class ScrollHandler extends Group {
         return false;
     }
 
+
+    //TODO EXERCICI 3 a)
     public void reset() {
-
-        // Posem el primer asteroid fora de la pantalla per la dreta
-        asteroids.get(0).reset(Settings.GAME_WIDTH);
-        // Calculem les noves posicions de la resta d'asteroids.
-        for (int i = 1; i < asteroids.size(); i++) {
-
-            asteroids.get(i).reset(asteroids.get(i - 1).getTailX() + Settings.ASTEROID_GAP);
-
+        for (Asteroid asteroid : asteroids) {
+            removeActor(asteroid);
         }
+        asteroids.clear();
     }
 
-    public ArrayList<Asteroid> getAsteroids() {
+    public DelayedRemovalArray<Asteroid> getAsteroids() {
         return asteroids;
     }
 }
