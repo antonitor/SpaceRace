@@ -94,4 +94,13 @@ public class Asteroid extends Scrollable {
         }
         return false;
     }
+
+
+    public boolean collides(Laser laser) {
+
+        if (position.x <= laser.getX() + laser.getWidth()) {
+            return (Intersector.overlaps(collisionCircle, laser.getCollisionRect()));
+        }
+        return false;
+    }
 }

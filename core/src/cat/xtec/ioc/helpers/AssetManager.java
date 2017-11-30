@@ -31,6 +31,9 @@ public class AssetManager {
     public static Sound explosionSound;
     public static Music music;
 
+    // TODO EXERCICI 3 b) Laser sound
+    public static Sound laserSound;
+
     //Pause
     public static TextureRegion pauseButton;
 
@@ -119,12 +122,11 @@ public class AssetManager {
         fireButton = new TextureRegion(sheet, 480, 227, 50, 50);
         fireButton.flip(false, true);
 
+        // TODO EXERCICI 3 b) - Sprite del laser i so
         laser = new TextureRegion(sheet, 480, 310, Settings.LASER_WIDTH, Settings.LASER_HEIGHT);
         laser.flip(false,true);
-
-
-
-    }
+        laserSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser-sileced.wav"));
+   }
 
     public static void dispose() {
 

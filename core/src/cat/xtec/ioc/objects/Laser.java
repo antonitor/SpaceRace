@@ -2,6 +2,7 @@ package cat.xtec.ioc.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.utils.Settings;
@@ -13,10 +14,15 @@ import cat.xtec.ioc.utils.Settings;
 //TODO EXERCICI 3 b) - Classe Laser que hereta de Scrollable i que a més controla si surt per el costat dret de la pantalla
 public class Laser extends Scrollable {
 
+    private Rectangle collisionRect;
+
     public Laser(float x, float y, int width, int height, int velocity) {
 
         super(x, y, width, height, velocity);
 
+        AssetManager.laserSound.play(.1f);
+
+        collisionRect = new Rectangle();
     }
 
     public void act(float delta) {
@@ -26,11 +32,17 @@ public class Laser extends Scrollable {
             Gdx.app.log("Right of Screen", ""+position.x );
             rightOfScreen = true;
         }
+
+        collisionRect.set(position.x, position.y, width, height);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(AssetManager.laser, position.x, position.y, width, height);
+    }
+
+    public Rectangle getCollisionRect() {
+        return collisionRect;
     }
 }

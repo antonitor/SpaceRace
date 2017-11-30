@@ -1,5 +1,6 @@
 package cat.xtec.ioc.objects;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Random;
 
+import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.utils.Methods;
 import cat.xtec.ioc.utils.Settings;
 
@@ -102,6 +104,21 @@ public class ScrollHandler extends Group {
         for (Asteroid asteroid : asteroids) {
             if (asteroid.collides(nau)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean laserAsteroidCollision() {
+        for (Asteroid asteroid : asteroids) {
+            for (Laser laser : llistaLaser) {
+                if (asteroid.collides(laser)) {
+                    removeActor(asteroid);
+                    removeActor(laser);
+                    llistaLaser.removeValue(laser, true);
+                    asteroids.removeValue(asteroid, true);
+                    return  true;
+                }
             }
         }
         return false;

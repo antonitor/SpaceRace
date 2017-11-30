@@ -153,6 +153,7 @@ public class GameScreen implements Screen {
             currentState = GameState.GAMEOVER;
         }
 
+        scrollHandler.laserAsteroidCollision();
 
     }
 
