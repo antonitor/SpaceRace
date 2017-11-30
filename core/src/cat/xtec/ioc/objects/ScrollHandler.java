@@ -109,7 +109,7 @@ public class ScrollHandler extends Group {
         return false;
     }
 
-    public boolean laserAsteroidCollision() {
+    public Asteroid asteroidDestroyed() {
         for (Asteroid asteroid : asteroids) {
             for (Laser laser : llistaLaser) {
                 if (asteroid.collides(laser)) {
@@ -117,11 +117,12 @@ public class ScrollHandler extends Group {
                     removeActor(laser);
                     llistaLaser.removeValue(laser, true);
                     asteroids.removeValue(asteroid, true);
-                    return  true;
+                    AssetManager.explosionSound.play();
+                    return  asteroid;
                 }
             }
         }
-        return false;
+        return null;
     }
 
 

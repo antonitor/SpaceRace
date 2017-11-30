@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.helpers.InputHandler;
+import cat.xtec.ioc.objects.Asteroid;
 import cat.xtec.ioc.objects.FireButton;
 import cat.xtec.ioc.objects.PauseButton;
 import cat.xtec.ioc.objects.ScrollHandler;
@@ -37,6 +39,8 @@ public class GameScreen implements Screen {
 
     //TODO EXERCICI 3 b) -  Variable que referencia l'actor FireButton
     private FireButton fireButton;
+    private DelayedRemovalArray<Asteroid> explosiveAsteroid;
+    private float[] explosionTimes = {0,0,0,0,0};
 
     // Encarregats de dibuixar elements per pantalla
     private ShapeRenderer shapeRenderer;
@@ -85,6 +89,7 @@ public class GameScreen implements Screen {
         //TODO EXERCICI 3 b) - Afegim el boto fire a l'stage i li donem nom
         stage.addActor(fireButton);
         fireButton.setName("fire");
+        explosiveAsteroid = new DelayedRemovalArray<Asteroid>();
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
@@ -153,8 +158,29 @@ public class GameScreen implements Screen {
             currentState = GameState.GAMEOVER;
         }
 
-        scrollHandler.laserAsteroidCollision();
+        if (explosiveAsteroid.size >= Settings.MAX_ASTEROID_NUMBER) {
+            explosiveAsteroid.clear();
+            float fourthExplosion = explosionTimes[3];
+            explosionTimes = new float[]{0,0,0,fourthExplosion};
+        }
 
+        Asteroid asteroid = scrollHandler.asteroidDestroyed();
+        if (asteroid != null) {
+            explosiveAsteroid.add(asteroid);
+            asteroid = null;
+        }
+
+
+        for(int i = 0; i <  explosiveAsteroid.size; i++) {
+            Asteroid explosive = explosiveAsteroid.get(i);
+            batch.begin();
+            batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionTimes[i], false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
+            batch.end();
+            explosionTimes[i] += delta;
+            if (explosionTimes[i] > 0.001f) {
+                Gdx.app.log("Explosion Time nº" + i + ": ", "" + explosionTimes[i]);
+            }
+        }
     }
 
     //TODO EXERCICI 2 - Durant l'estat de Pausa dibuixem el texte i actualitzem els actors que parpallegen
