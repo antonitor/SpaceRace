@@ -6,10 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cat.xtec.ioc.objects.PauseButton;
 import cat.xtec.ioc.objects.Spacecraft;
 import cat.xtec.ioc.screens.GameScreen;
-import cat.xtec.ioc.utils.Settings;
 
 public class InputHandler implements InputProcessor {
 
@@ -65,6 +63,9 @@ public class InputHandler implements InputProcessor {
                     //TODO EXERCICI 2 - Si es fa clic sobre el botó pause pausem el joc
                     if (actorHit.getName().equals("pause")) {
                         screen.pauseGame();
+                    //TODO EXERCICI 3 b) - Si fem clic sobre el botó fire disparem un laser
+                    } else if (actorHit.getName().equals("fire")) {
+                        screen.getSpacecraft().fire();
                     }
                 }
                 break;

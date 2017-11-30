@@ -1,6 +1,5 @@
 package cat.xtec.ioc.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 
 import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.screens.GameScreen;
 import cat.xtec.ioc.utils.Methods;
 import cat.xtec.ioc.utils.Settings;
 
@@ -26,6 +26,7 @@ public class Spacecraft extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
+    private GameScreen gameScreen;
 
     //TODO EXERCICI 2 - Variables membre
     private RepeatAction parpalleig;
@@ -34,12 +35,13 @@ public class Spacecraft extends Actor {
 
     private Rectangle collisionRect;
 
-    public Spacecraft(float x, float y, int width, int height) {
+    public Spacecraft(float x, float y, int width, int height, GameScreen gameScreen) {
 
         // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
         this.height = height;
         position = new Vector2(x, y);
+        this.gameScreen = gameScreen;
 
         // Inicialitzem la spacecraft a l'estat normal
         direction = SPACECRAFT_STRAIGHT;
@@ -170,6 +172,11 @@ public class Spacecraft extends Actor {
         this.addAction(Actions.alpha(1f));
         // Eliminem la seqüencia
         this.removeAction(parpalleig);
+    }
+
+    // TODO EXERCICI 3 b) - Per disparar un laser tan sols hem d'afegir un nou objecte Laser al ScrollHandler amb la posició del frontal de la nau
+    public void fire() {
+        gameScreen.getScrollHandler().fireLaser(new Laser(position.x + width, position.y + height * 2/3, Settings.LASER_WIDTH, Settings.LASER_HEIGHT, Settings.LASER_SPEED));
     }
 
 }

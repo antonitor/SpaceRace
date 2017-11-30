@@ -10,19 +10,16 @@ import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.utils.Settings.Status;
 
 /**
- * Created by Toni on 27/11/2017.
+ * Created by Toni on 29/11/2017.
  */
 
-//TODO EXERCICI 2 - Actor que defineix el botó pause. Te dos estats: SHOWN i HIDDEN
-
-public class PauseButton extends Actor {
-
-    // Paràmetres del botó pause
+public class FireButton extends Actor{
+    // Paràmetres del botó fire
     private Vector2 position;
     private int width, height;
     private Status status;
 
-    public PauseButton(float x, float y, int width, int height) {
+    public FireButton(float x, float y, int width, int height) {
 
         // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
@@ -44,7 +41,7 @@ public class PauseButton extends Actor {
         batch.setColor(color.r, color.g, color.b, color.a);
         switch (status) {
             case SHOWN:
-                batch.draw(AssetManager.pauseButton, position.x, position.y, width, height);
+                batch.draw(AssetManager.fireButton, position.x, position.y, width, height);
                 break;
             case HIDDEN:
                 //No dibuixem res
@@ -52,9 +49,7 @@ public class PauseButton extends Actor {
         }
     }
 
-
     public void setStatus(Status status) {
         this.status = status;
     }
-
 }

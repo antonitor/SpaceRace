@@ -28,9 +28,27 @@ public class Settings {
     public static final float PAUSE_BUTTON_X = GAME_WIDTH - PAUSE_BUTTON_WIDTH;
     public static final float PAUSE_BUTTON_Y = 0;
 
+    //Propietats del botó fire
+    public static final int FIRE_BUTTON_WIDTH = 50;
+    public static final int FIRE_BUTTON_HEIGHT = 50;
+    public static final float FIRE_BUTTON_X = GAME_WIDTH - FIRE_BUTTON_WIDTH;
+    public static final float FIRE_BUTTON_Y = GAME_HEIGHT - FIRE_BUTTON_HEIGHT;
 
-    //TODO EXERCICI 3 a) Nombre màxim d'axteroides
+
+
+    //TODO EXERCICI 3 a) - Nombre màxim d'axteroides
     public static int MAX_ASTEROID_NUMBER = 4;
     public static final float MAX_ASTEROID_INTERVAL = 2f;
     public static final float MIN_ASTEROID_INTERVAL = 1f;
+
+    //TODO EXERCICI 3 b) - Propietats del laser
+    public static int LASER_SPEED = 200;
+    public static int LASER_WIDTH = 6;
+    public static int LASER_HEIGHT = 2;
+
+
+    //TODO EXERCICI 2 i 3 b) - Propietats dels botons
+    public static enum Status {
+        SHOWN, HIDDEN
+    }
 }

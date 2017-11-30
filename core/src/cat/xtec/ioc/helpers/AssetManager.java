@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import cat.xtec.ioc.utils.Settings;
+
 public class AssetManager {
 
     // Sprite Sheet
@@ -31,6 +33,12 @@ public class AssetManager {
 
     //Pause
     public static TextureRegion pauseButton;
+
+    //Fire
+    public static TextureRegion fireButton;
+
+    //Laser
+    public static TextureRegion laser;
 
     // Font
     public static BitmapFont font;
@@ -105,6 +113,17 @@ public class AssetManager {
         /*******************************Pause***************************************/
         pauseButton = new TextureRegion(sheet, 480, 177, 50, 50);
         pauseButton.flip(false, true);
+
+        //TODO EXERCICI 3 b) - Sprite del botó fire
+        /*******************************FIRE***************************************/
+        fireButton = new TextureRegion(sheet, 480, 227, 50, 50);
+        fireButton.flip(false, true);
+
+        laser = new TextureRegion(sheet, 480, 310, Settings.LASER_WIDTH, Settings.LASER_HEIGHT);
+        laser.flip(false,true);
+
+
+
     }
 
     public static void dispose() {

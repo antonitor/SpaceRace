@@ -2,20 +2,15 @@ package cat.xtec.ioc.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.ArrayList;
 
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.helpers.InputHandler;
-import cat.xtec.ioc.objects.Asteroid;
+import cat.xtec.ioc.objects.FireButton;
 import cat.xtec.ioc.objects.PauseButton;
 import cat.xtec.ioc.objects.ScrollHandler;
 import cat.xtec.ioc.objects.Spacecraft;
@@ -37,8 +32,11 @@ public class GameScreen implements Screen {
     private Spacecraft spacecraft;
     private ScrollHandler scrollHandler;
 
-    //TODO EXERCICI 2 : Variable per emmagatzemar l'actor PauseButton
+    //TODO EXERCICI 2 - Variable que referencia l'actor PauseButton
     private PauseButton pauseButton;
+
+    //TODO EXERCICI 3 b) -  Variable que referencia l'actor FireButton
+    private FireButton fireButton;
 
     // Encarregats de dibuixar elements per pantalla
     private ShapeRenderer shapeRenderer;
@@ -67,19 +65,26 @@ public class GameScreen implements Screen {
         batch = stage.getBatch();
 
         // Creem la nau i la resta d'objectes
-        spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT);
+        spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT, this);
         scrollHandler = new ScrollHandler();
-        //TODO EXERCICI 2: Creem botó pause
+        //TODO EXERCICI 2 - Creem botó pause
         pauseButton = new PauseButton(Settings.PAUSE_BUTTON_X, Settings.PAUSE_BUTTON_Y, Settings.PAUSE_BUTTON_WIDTH, Settings.PAUSE_BUTTON_HEIGHT);
+
+        //TODO EXERCICI 3 b) - Creem el botó fire
+        fireButton = new FireButton(Settings.FIRE_BUTTON_X, Settings.FIRE_BUTTON_Y, Settings.FIRE_BUTTON_WIDTH, Settings.FIRE_BUTTON_HEIGHT);
 
         // Afegim els actors a l'stage
         stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
         // Donem nom a l'Actor
         spacecraft.setName("spacecraft");
-        //TODO EXERCICI 2: Afegim el boto pause a l'stage i li donem nom
+        //TODO EXERCICI 2 - Afegim el boto pause a l'stage i li donem nom
         stage.addActor(pauseButton);
         pauseButton.setName("pause");
+
+        //TODO EXERCICI 3 b) - Afegim el boto fire a l'stage i li donem nom
+        stage.addActor(fireButton);
+        fireButton.setName("fire");
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
@@ -200,8 +205,9 @@ public class GameScreen implements Screen {
     public void pauseGame() {
         //Es posa l'estat d'aquesta classe a PAUSE
         this.setCurrentState(GameScreen.GameState.PAUSE);
-        //S'amaga el botó Pause
-        this.getPauseButton().setStatus(PauseButton.Status.HIDDEN);
+        //S'amaguen el botó Pause i Fire
+        this.getPauseButton().setStatus(Settings.Status.HIDDEN);
+        this.fireButton.setStatus(Settings.Status.HIDDEN);
         //Es truquen els mètodes pause dels actors que parpallejaràn
         this.getSpacecraft().pause();
         //Disminuim el volum de la música
@@ -215,7 +221,8 @@ public class GameScreen implements Screen {
         //Es posa l'estat d'aquesta classe a RUNNING
         this.setCurrentState(GameScreen.GameState.RUNNING);
         //Tornem a mostrem el botó pause mentre corre el joc
-        this.getPauseButton().setStatus(PauseButton.Status.SHOWN);
+        this.getPauseButton().setStatus(Settings.Status.SHOWN);
+        this.fireButton.setStatus(Settings.Status.SHOWN);
         //Tornem deixar el volum de la música com estaba
         AssetManager.music.setVolume(.2f);
     }
