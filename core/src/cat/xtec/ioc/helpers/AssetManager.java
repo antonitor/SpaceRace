@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cat.xtec.ioc.utils.Settings;
 
+import static cat.xtec.ioc.utils.Settings.EXPLOSION_FRAME_DURATION;
+
 public class AssetManager {
 
     // Sprite Sheet
@@ -72,7 +74,7 @@ public class AssetManager {
         }
 
         // Creem l'animació de l'asteroid i fem que s'executi contínuament en sentit anti-horari
-        asteroidAnim = new Animation(0.05f, asteroid);
+        asteroidAnim = new Animation(EXPLOSION_FRAME_DURATION, asteroid);
         asteroidAnim.setPlayMode(Animation.PlayMode.LOOP_REVERSED);
 
         // Creem els 16 estats de l'explosió

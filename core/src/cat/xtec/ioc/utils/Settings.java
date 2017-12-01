@@ -46,6 +46,10 @@ public class Settings {
     public static int LASER_WIDTH = 6;
     public static int LASER_HEIGHT = 2;
 
+    //Explosió
+    public static float EXPLOSION_FRAME_DURATION = .05f;
+    public static float EXPLOSION_FRAMES = 16;
+
 
     //TODO EXERCICI 2 i 3 b) - Propietats dels botons
     public static enum Status {

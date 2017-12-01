@@ -18,6 +18,9 @@ import cat.xtec.ioc.objects.ScrollHandler;
 import cat.xtec.ioc.objects.Spacecraft;
 import cat.xtec.ioc.utils.Settings;
 
+import static cat.xtec.ioc.utils.Settings.EXPLOSION_FRAMES;
+import static cat.xtec.ioc.utils.Settings.EXPLOSION_FRAME_DURATION;
+
 public class GameScreen implements Screen {
 
     // Els estats del joc
@@ -40,7 +43,7 @@ public class GameScreen implements Screen {
     //TODO EXERCICI 3 b) -  Variable que referencia l'actor FireButton
     private FireButton fireButton;
     private DelayedRemovalArray<Asteroid> explosiveAsteroid;
-    private float[] explosionTimes = {0,0,0,0,0};
+    private DelayedRemovalArray<Float> explosionsTimes;
 
     // Encarregats de dibuixar elements per pantalla
     private ShapeRenderer shapeRenderer;
@@ -90,6 +93,7 @@ public class GameScreen implements Screen {
         stage.addActor(fireButton);
         fireButton.setName("fire");
         explosiveAsteroid = new DelayedRemovalArray<Asteroid>();
+        explosionsTimes = new DelayedRemovalArray<Float>();
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
@@ -158,55 +162,59 @@ public class GameScreen implements Screen {
             currentState = GameState.GAMEOVER;
         }
 
-        if (explosiveAsteroid.size >= Settings.MAX_ASTEROID_NUMBER) {
-            explosiveAsteroid.clear();
-            float fourthExplosion = explosionTimes[3];
-            explosionTimes = new float[]{0,0,0,fourthExplosion};
-        }
 
+
+        //TODO EXERCICI 3 b) - Quan es destrueix un asteroide, es guarda aquest a la llista per
+        //tal de reproduir-ne l'explosió a la posició on s'ha destruït.
+        //Afegim també un zero a la llista explosionsTimes per tal de controlar el temps d'animació
+        //d'aquesta explosió.
         Asteroid asteroid = scrollHandler.asteroidDestroyed();
         if (asteroid != null) {
             explosiveAsteroid.add(asteroid);
+            explosionsTimes.add(0f);
             asteroid = null;
         }
 
+        //TODO EXERCICI 3 b) - Quan el temps d'explosió excedeix el necessari per reproduïr l'explosió,
+        //esborrem l'asteroide i el temporitzador de les seves corresponents llistes.
+        for (int i = 0; i < explosionsTimes.size; i++) {
+            if (explosionsTimes.get(i) > EXPLOSION_FRAME_DURATION * EXPLOSION_FRAMES) {
+                explosiveAsteroid.removeIndex(i);
+                explosionsTimes.removeIndex(i);
+            }
+        }
 
+
+        //TODO EXERCICI 3 b) Per cada asteroide enregistrat a la llista explosiveAsteroid, reproduím un cop
+        //l'anmimació d'explosió en la posició d'aquest.
         for(int i = 0; i <  explosiveAsteroid.size; i++) {
             Asteroid explosive = explosiveAsteroid.get(i);
             batch.begin();
-            batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionTimes[i], false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
+            batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionsTimes.get(i), false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
             batch.end();
-            explosionTimes[i] += delta;
-            if (explosionTimes[i] > 0.001f) {
-                Gdx.app.log("Explosion Time nº" + i + ": ", "" + explosionTimes[i]);
+            explosionsTimes.set(i, explosionsTimes.get(i) + delta);
+            if (explosionsTimes.get(i) > 0f) {
+                Gdx.app.log("Explosion Time nº" + i + ": ", "" + explosionsTimes.get(i));
             }
         }
     }
 
     //TODO EXERCICI 2 - Durant l'estat de Pausa dibuixem el texte i actualitzem els actors que parpallegen
     private void updatePause(float delta) {
-
         this.spacecraft.act(delta);
-
         batch.begin();
         AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
-
-        //spacecraft.pause(delta);
-        //spacecraft.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.alpha(0f, 0.5f * delta), Actions.alpha(1f, 0.5f * delta))));
     }
 
     private void updateGameOver(float delta) {
         stage.act(delta);
-
         batch.begin();
         AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH - textLayout.width) / 2, (Settings.GAME_HEIGHT - textLayout.height) / 2);
         // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
         batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionTime, false), (spacecraft.getX() + spacecraft.getWidth() / 2) - 32, spacecraft.getY() + spacecraft.getHeight() / 2 - 32, 64, 64);
         batch.end();
-
         explosionTime += delta;
-
     }
 
     public void reset() {
