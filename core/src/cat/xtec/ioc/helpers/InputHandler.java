@@ -20,7 +20,9 @@ public class InputHandler implements InputProcessor {
 
     private Stage stage;
 
-    // TODO EXERCICI 3 b) - Enter que enregistra el clic que mou la nau
+    // TODO EXERCICI 3 b) - Enter que enregistra el punter que mou la nau. Necessari per tal de poder
+    // disparar a l'hora que movem la nau sense que el clic al botó de dispar ens influeixi en el
+    // moviment de la nau.
     private int movementPointer;
 
     public InputHandler(GameScreen screen) {
@@ -94,7 +96,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
-        // TODO EXERCICI 3 b) Tan sols si es tracta del pointer de moviment posem la nau en estat normal quan deixem anar el dit
+        // TODO EXERCICI 3 b) Tan sols  posem la nau en estat normal quan deixem anar el dit, si es tracta del pointer de moviment
         if (movementPointer == pointer) {
             spacecraft.goStraight();
         }

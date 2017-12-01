@@ -11,9 +11,10 @@ import cat.xtec.ioc.utils.Settings;
  * Created by Toni on 29/11/2017.
  */
 
-//TODO EXERCICI 3 b) - Classe Laser que hereta de Scrollable i que a més controla si surt per el costat dret de la pantalla
+//TODO EXERCICI 3 b) - Classe Laser que hereta de Scrollable
 public class Laser extends Scrollable {
 
+    // Rectangle per controlar colisions amb asteroides
     private Rectangle collisionRect;
 
     public Laser(float x, float y, int width, int height, int velocity) {
@@ -28,6 +29,7 @@ public class Laser extends Scrollable {
     public void act(float delta) {
         super.act(delta);
 
+        // Controla si el laser surt per el costat dret de la pantalla
         if (position.x > Settings.GAME_WIDTH) {
             Gdx.app.log("Right of Screen", ""+position.x );
             rightOfScreen = true;

@@ -96,8 +96,8 @@ public class Asteroid extends Scrollable {
     }
 
 
+    // TODO EXERCICI 3 b) - Colisió entre l'asteroid i el laser
     public boolean collides(Laser laser) {
-
         if (position.x <= laser.getX() + laser.getWidth()) {
             return (Intersector.overlaps(collisionCircle, laser.getCollisionRect()));
         }

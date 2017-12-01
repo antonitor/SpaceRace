@@ -22,13 +22,13 @@ public class Settings {
     public static final int ASTEROID_GAP = 75;
     public static final int BG_SPEED = -100;
 
-    // Propietats del botó pause
+    //TODO EXERCICI 2 - Propietats del botó pause
     public static final int PAUSE_BUTTON_WIDTH = 50;
     public static final int PAUSE_BUTTON_HEIGHT = 50;
     public static final float PAUSE_BUTTON_X = GAME_WIDTH - PAUSE_BUTTON_WIDTH;
     public static final float PAUSE_BUTTON_Y = 0;
 
-    //Propietats del botó fire
+    //TODO EXERCICI 3 b) - Propietats del botó fire
     public static final int FIRE_BUTTON_WIDTH = 50;
     public static final int FIRE_BUTTON_HEIGHT = 50;
     public static final float FIRE_BUTTON_X = GAME_WIDTH - FIRE_BUTTON_WIDTH;

@@ -42,6 +42,8 @@ public class GameScreen implements Screen {
 
     //TODO EXERCICI 3 b) -  Variable que referencia l'actor FireButton
     private FireButton fireButton;
+
+    //TODO EXERCICI 3 b) - Variables per reproduir les explosions simultanies d'asteroides
     private DelayedRemovalArray<Asteroid> explosiveAsteroid;
     private DelayedRemovalArray<Float> explosionsTimes;
 
@@ -92,6 +94,9 @@ public class GameScreen implements Screen {
         //TODO EXERCICI 3 b) - Afegim el boto fire a l'stage i li donem nom
         stage.addActor(fireButton);
         fireButton.setName("fire");
+
+        //TODO EXERCICI 3 b) - Iniciem els arrays necessaris per reproduir anmacións d'explosió
+        // simultanies quan es destrueix un asteroide.
         explosiveAsteroid = new DelayedRemovalArray<Asteroid>();
         explosionsTimes = new DelayedRemovalArray<Float>();
 
@@ -161,7 +166,6 @@ public class GameScreen implements Screen {
             textLayout.setText(AssetManager.font, "Game Over :'(");
             currentState = GameState.GAMEOVER;
         }
-
 
 
         //TODO EXERCICI 3 b) - Quan es destrueix un asteroide, es guarda aquest a la llista per

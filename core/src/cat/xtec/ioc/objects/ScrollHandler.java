@@ -65,8 +65,8 @@ public class ScrollHandler extends Group {
         // TODO EXERICIC 3 a) - Segons entre el moment actual i el començament del últim asteroid
         float elapsedTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime);
 
+        // TODO EXERCICI 3 a) - Esborem els asteroids que surten de la pantalla (del array i del stage)
         for (Asteroid asteroid : asteroids) {
-            //Si un asteroid surt de la pantalla l'esborrem del array i del stage
             if (asteroid.isLeftOfScreen()) {
                 removeActor(asteroid);
                 asteroids.removeValue(asteroid, true);
@@ -109,6 +109,9 @@ public class ScrollHandler extends Group {
         return false;
     }
 
+    //TODO EXERCICI 3 b) - Quan un laser colisiona amb un asteroid es borren els dos del stage,
+    // es reprodueix el so d'explosió i es torna l'asteroid per tal que es pugui reproduïr l'animació
+    // d'explosió en la posició d'aquest asteroid.
     public Asteroid asteroidDestroyed() {
         for (Asteroid asteroid : asteroids) {
             for (Laser laser : llistaLaser) {
@@ -126,7 +129,7 @@ public class ScrollHandler extends Group {
     }
 
 
-    //TODO EXERCICI 3 a) - Quan comença una nova partida liminem tots els asteroids del array i del stage
+    //TODO EXERCICI 3 a) - Quan comença una nova partida eliminem tots els asteroids del array i del stage
     public void reset() {
         for (Asteroid asteroid : asteroids) {
             removeActor(asteroid);
