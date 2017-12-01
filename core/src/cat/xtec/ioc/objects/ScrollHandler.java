@@ -46,8 +46,6 @@ public class ScrollHandler extends Group {
         //TODO EXERCICI 3 a) i b) - Inicialitzem les llistes de laser i asteroids
         asteroids = new DelayedRemovalArray<Asteroid>();
         llistaLaser = new DelayedRemovalArray<Laser>();
-
-        this.randomInterval = MathUtils.random(Settings.MIN_ASTEROID_INTERVAL, Settings.MAX_ASTEROID_INTERVAL);
     }
 
     @Override
@@ -65,14 +63,6 @@ public class ScrollHandler extends Group {
         // TODO EXERICIC 3 a) - Segons entre el moment actual i el començament del últim asteroid
         float elapsedTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime);
 
-        // TODO EXERCICI 3 a) - Esborem els asteroids que surten de la pantalla (del array i del stage)
-        for (Asteroid asteroid : asteroids) {
-            if (asteroid.isLeftOfScreen()) {
-                removeActor(asteroid);
-                asteroids.removeValue(asteroid, true);
-            }
-        }
-
         // TODO EXERICIC 3 a) - Quan ha transcurregut l'interval de temps afegim un nou asteroid
         if (elapsedTime >= randomInterval) {
             // Generam un nou interval de temps aleatori entre el mínim i el màxim
@@ -86,6 +76,14 @@ public class ScrollHandler extends Group {
                 Asteroid a = new Asteroid(Settings.GAME_WIDTH, r.nextInt(Settings.GAME_HEIGHT - (int) newSize), newSize, newSize, Settings.ASTEROID_SPEED);
                 asteroids.add(a);
                 addActor(a);
+            }
+        }
+
+        // TODO EXERCICI 3 a) - Esborem els asteroids que surten de la pantalla
+        for (Asteroid asteroid : asteroids) {
+            if (asteroid.isLeftOfScreen()) {
+                removeActor(asteroid);
+                asteroids.removeValue(asteroid, true);
             }
         }
 

@@ -51,24 +51,24 @@ public class AssetManager {
 
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        sheet = new Texture(Gdx.files.internal("sheet3.png"));
+        sheet = new Texture(Gdx.files.internal("sheet.png"));
         sheet.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         // Sprites de la nau
-        spacecraft = new TextureRegion(sheet, 0, 0, 36, 15);
+        spacecraft = new TextureRegion(sheet, 0, 0, 36, 18);
         spacecraft.flip(false, true);
 
-        spacecraftUp = new TextureRegion(sheet, 36, 0, 36, 15);
+        spacecraftUp = new TextureRegion(sheet, 36, 0, 36, 18);
         spacecraftUp.flip(false, true);
 
-        spacecraftDown = new TextureRegion(sheet, 72, 0, 36, 15);
+        spacecraftDown = new TextureRegion(sheet, 72, 0, 36, 18);
         spacecraftDown.flip(false, true);
 
         // Carreguem els 16 estats de l'asteroid
         asteroid = new TextureRegion[16];
         for (int i = 0; i < asteroid.length; i++) {
 
-            asteroid[i] = new TextureRegion(sheet, i * 34, 15, 34, 34);
+            asteroid[i] = new TextureRegion(sheet, i * 34, 18, 34, 34);
             asteroid[i].flip(false, true);
 
         }
@@ -116,16 +116,16 @@ public class AssetManager {
 
         //TODO EXERCICI 2 - Sprite del botó pause
         /*******************************Pause***************************************/
-        pauseButton = new TextureRegion(sheet, 480, 177, 50, 50);
+        pauseButton = new TextureRegion(sheet, 480, 180, 50, 50);
         pauseButton.flip(false, true);
 
         //TODO EXERCICI 3 b) - Sprite del botó fire
         /*******************************FIRE***************************************/
-        fireButton = new TextureRegion(sheet, 480, 227, 50, 50);
+        fireButton = new TextureRegion(sheet, 480, 230, 50, 50);
         fireButton.flip(false, true);
 
         // TODO EXERCICI 3 b) - Sprite del laser i so
-        laser = new TextureRegion(sheet, 480, 310, Settings.LASER_WIDTH, Settings.LASER_HEIGHT);
+        laser = new TextureRegion(sheet, 480, 313, Settings.LASER_WIDTH, Settings.LASER_HEIGHT);
         laser.flip(false,true);
         laserSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser-sileced.wav"));
    }

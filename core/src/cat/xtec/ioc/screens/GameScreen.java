@@ -83,10 +83,12 @@ public class GameScreen implements Screen {
         fireButton = new FireButton(Settings.FIRE_BUTTON_X, Settings.FIRE_BUTTON_Y, Settings.FIRE_BUTTON_WIDTH, Settings.FIRE_BUTTON_HEIGHT);
 
         // Afegim els actors a l'stage
-        stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
+        stage.addActor(scrollHandler);
+
         // Donem nom a l'Actor
         spacecraft.setName("spacecraft");
+
         //TODO EXERCICI 2 - Afegim el boto pause a l'stage i li donem nom
         stage.addActor(pauseButton);
         pauseButton.setName("pause");
@@ -112,6 +114,7 @@ public class GameScreen implements Screen {
 
         // Assignem com a gestor d'entrada la classe InputHandler
         Gdx.input.setInputProcessor(new InputHandler(this));
+        stage.addActor(spacecraft);
 
     }
 
