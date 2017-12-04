@@ -51,8 +51,23 @@ public class Settings {
     public static float EXPLOSION_FRAMES = 16;
 
 
+
     //TODO EXERCICI 2 i 3 b) - Propietats dels botons
     public static enum Status {
         SHOWN, HIDDEN
     }
+
+
+    //TODO EXTRA - TEXTURE ATLAS
+    public static final String ATLAS = "images/spacerace.pack.atlas";
+    public static String ASTEROID = "asteroid";
+    public static final java.lang.String SPACECRAFT = "spacecraft";
+    public static final java.lang.String SPACECRAFT_UP = "spacecraft_up";
+    public static final java.lang.String SPACECRAFT_DOWN = "spacecraft_down";
+    public static String EXPLOSION = "explosion";
+    public static final java.lang.String BACKGROUND = "background";
+    public static final java.lang.String PAUSE_BUTTON = "pause";
+    public static final java.lang.String FIRE_BUTTON = "fire";
+    public static final java.lang.String LASER = "laser";
+
 }

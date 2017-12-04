@@ -81,7 +81,7 @@ project(":core") {
             TexturePacker.process(inputDir, outputDir, "spacerace.pack")
         }
     }
-
+    //TODO EXTRA - Genera un Atlas amb les imatges de la carpeta sprites
     project.tasks.compileJava.dependsOn packTextures
 }
 
