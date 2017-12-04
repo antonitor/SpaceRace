@@ -80,13 +80,13 @@ public class Assets {
         // Carreguem els 16 estats de l'asteroid
         asteroid = new TextureRegion[16];
         for (int i = 0; i < asteroid.length; i++) {
-            String t = "";
+            String num = "";
             if (i < 9) {
-                t = "0" + (i + 1);
+                num = "0" + (i + 1);
             } else {
-                t = "" + (i + 1);
+                num = "" + (i + 1);
             }
-            asteroid[i] = atlas.findRegion(Settings.ASTEROID + t);
+            asteroid[i] = atlas.findRegion(Settings.ASTEROID + num);
             asteroid[i].flip(false, true);
         }
 
@@ -95,17 +95,17 @@ public class Assets {
         asteroidAnim.setPlayMode(Animation.PlayMode.LOOP_REVERSED);
 
         // Creem els 16 estats de l'explosió
-        explosion = new TextureRegion[15];
+        explosion = new TextureRegion[16];
 
         // Carreguem els 16 estats de l'explosió
         for (int i = 0; i < explosion.length; i++) {
-            String t = "";
+            String num = "";
             if (i < 9) {
-                t = "0" + (i + 1);
+                num = "0" + (i + 1);
             } else {
-                t = "" + (i + 1);
+                num = "" + (i + 1);
             }
-            explosion[i] = atlas.findRegion(Settings.EXPLOSION + t);
+            explosion[i] = atlas.findRegion(Settings.EXPLOSION + num);
             explosion[i].flip(false, true);
 
         }
@@ -146,7 +146,7 @@ public class Assets {
         fireButton.flip(false, true);
 
         // TODO EXERCICI 3 b) - Sprite del laser i so
-        laser = atlas.findRegion(Settings.LASER);
+        laser = atlas.findRegion(Settings.LASER2);
         laser.flip(false, true);
         laserSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser-sileced.wav"));
     }

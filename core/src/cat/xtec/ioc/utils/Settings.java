@@ -43,8 +43,8 @@ public class Settings {
 
     //TODO EXERCICI 3 b) - Propietats del laser
     public static int LASER_SPEED = 200;
-    public static int LASER_WIDTH = 6;
-    public static int LASER_HEIGHT = 2;
+    public static int LASER_WIDTH = 12;
+    public static int LASER_HEIGHT = 4;
 
     //Explosió
     public static float EXPLOSION_FRAME_DURATION = .05f;
@@ -69,5 +69,6 @@ public class Settings {
     public static final java.lang.String PAUSE_BUTTON = "pause";
     public static final java.lang.String FIRE_BUTTON = "fire";
     public static final java.lang.String LASER = "laser";
+    public static final java.lang.String LASER2 = "laser2";
 
 }
