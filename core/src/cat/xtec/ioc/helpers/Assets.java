@@ -13,7 +13,7 @@ import cat.xtec.ioc.utils.Settings;
 
 import static cat.xtec.ioc.utils.Settings.EXPLOSION_FRAME_DURATION;
 
-public class AssetManager {
+public class Assets {
 
     // Sprite Sheet
     public static Texture sheet;

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import cat.xtec.ioc.SpaceRace;
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.utils.Settings;
 
 
@@ -41,10 +41,10 @@ public class SplashScreen implements Screen {
         stage = new Stage(viewport);
 
         // Afegim el fons
-        stage.addActor(new Image(AssetManager.background));
+        stage.addActor(new Image(Assets.background));
 
         // Creem l'estil de l'etiqueta i l'etiqueta
-        textStyle = new Label.LabelStyle(AssetManager.font, null);
+        textStyle = new Label.LabelStyle(Assets.font, null);
         textLbl = new Label("SpaceRace", textStyle);
 
         // Creem el contenidor necessari per aplicar-li les accions
@@ -56,7 +56,7 @@ public class SplashScreen implements Screen {
         container.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 3);
 
         //TODO EXERCICI 1 - b) Afegim un segón títol situat en 5/6 de la pantalla i tamany de lletra 0.2f
-        textStyle = new Label.LabelStyle(AssetManager.font2, null);
+        textStyle = new Label.LabelStyle(Assets.font2, null);
         textLbl_2 = new Label("Tap Screen to Start", textStyle);
         Container container_2 = new Container(textLbl_2);
         container_2.setTransform(true);
@@ -72,7 +72,7 @@ public class SplashScreen implements Screen {
         stage.addActor(container);
 
         // Creem la imatge de la nau i li assignem el moviment en horitzontal
-        Image spacecraft = new Image(AssetManager.spacecraft);
+        Image spacecraft = new Image(Assets.spacecraft);
         float y = Settings.GAME_HEIGHT / 2 + textLbl.getHeight();
         spacecraft.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(0 - spacecraft.getWidth(), y), Actions.moveTo(Settings.GAME_WIDTH, y, 5))));
 

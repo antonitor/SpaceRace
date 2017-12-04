@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.utils.Settings;
 
 /**
@@ -21,7 +21,7 @@ public class Laser extends Scrollable {
 
         super(x, y, width, height, velocity);
 
-        AssetManager.laserSound.play(.1f);
+        Assets.laserSound.play(.1f);
 
         collisionRect = new Rectangle();
     }
@@ -41,7 +41,7 @@ public class Laser extends Scrollable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.laser, position.x, position.y, width, height);
+        batch.draw(Assets.laser, position.x, position.y, width, height);
     }
 
     public Rectangle getCollisionRect() {

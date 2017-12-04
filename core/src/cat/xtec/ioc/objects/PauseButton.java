@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.utils.Settings.Status;
 
 /**
@@ -44,7 +44,7 @@ public class PauseButton extends Image {
         batch.setColor(color.r, color.g, color.b, color.a);
         switch (status) {
             case SHOWN:
-                batch.draw(AssetManager.pauseButton, position.x, position.y, width, height);
+                batch.draw(Assets.pauseButton, position.x, position.y, width, height);
                 break;
             case HIDDEN:
                 //No dibuixem res

@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.screens.GameScreen;
 import cat.xtec.ioc.utils.Methods;
 import cat.xtec.ioc.utils.Settings;
@@ -125,15 +125,15 @@ public class Spacecraft extends Actor {
         switch (direction) {
             case SPACECRAFT_STRAIGHT:
                 this.lastDirection = SPACECRAFT_STRAIGHT;
-                return AssetManager.spacecraft;
+                return Assets.spacecraft;
             case SPACECRAFT_UP:
                 this.lastDirection = SPACECRAFT_UP;
-                return AssetManager.spacecraftUp;
+                return Assets.spacecraftUp;
             case SPACECRAFT_DOWN:
                 this.lastDirection = SPACECRAFT_DOWN;
-                return AssetManager.spacecraftDown;
+                return Assets.spacecraftDown;
             default:
-                return AssetManager.spacecraft;
+                return Assets.spacecraft;
         }
     }
 

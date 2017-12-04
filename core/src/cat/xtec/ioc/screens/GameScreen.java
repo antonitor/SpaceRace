@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.helpers.InputHandler;
 import cat.xtec.ioc.objects.Asteroid;
 import cat.xtec.ioc.objects.FireButton;
@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
     public GameScreen(Batch prevBatch, Viewport prevViewport) {
 
         // Iniciem la música
-        AssetManager.music.play();
+        Assets.music.play();
 
         // Creem el ShapeRenderer
         shapeRenderer = new ShapeRenderer();
@@ -104,11 +104,11 @@ public class GameScreen implements Screen {
 
         // Iniciem el GlyphLayout
         textLayout = new GlyphLayout();
-        textLayout.setText(AssetManager.font, "Are you\nready?");
+        textLayout.setText(Assets.font, "Are you\nready?");
 
         //TODO EXERCICI 2 - Afegim la font i el texte al GlyphLayout
         pauseLayout = new GlyphLayout();
-        pauseLayout.setText(AssetManager.font, "Pause");
+        pauseLayout.setText(Assets.font, "Pause");
 
         currentState = GameState.READY;
 
@@ -152,7 +152,7 @@ public class GameScreen implements Screen {
 
         // Dibuixem el text al centre de la pantalla
         batch.begin();
-        AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 2) - textLayout.height / 2);
+        Assets.font.draw(batch, textLayout, (Settings.GAME_WIDTH / 2) - textLayout.width / 2, (Settings.GAME_HEIGHT / 2) - textLayout.height / 2);
         //stage.addActor(textLbl);
         batch.end();
 
@@ -164,9 +164,9 @@ public class GameScreen implements Screen {
 
         if (scrollHandler.collides(spacecraft)) {
             // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
-            AssetManager.explosionSound.play();
+            Assets.explosionSound.play();
             stage.getRoot().findActor("spacecraft").remove();
-            textLayout.setText(AssetManager.font, "Game Over :'(");
+            textLayout.setText(Assets.font, "Game Over :'(");
             currentState = GameState.GAMEOVER;
         }
 
@@ -197,7 +197,7 @@ public class GameScreen implements Screen {
         for(int i = 0; i <  explosiveAsteroid.size; i++) {
             Asteroid explosive = explosiveAsteroid.get(i);
             batch.begin();
-            batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionsTimes.get(i), false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
+            batch.draw(Assets.explosionAnim.getKeyFrame(explosionsTimes.get(i), false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
             batch.end();
             explosionsTimes.set(i, explosionsTimes.get(i) + delta);
             if (explosionsTimes.get(i) > 0f) {
@@ -210,16 +210,16 @@ public class GameScreen implements Screen {
     private void updatePause(float delta) {
         this.spacecraft.act(delta);
         batch.begin();
-        AssetManager.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
+        Assets.font.draw(batch, pauseLayout, (Settings.GAME_WIDTH / 2) - pauseLayout.width / 2, (Settings.GAME_HEIGHT / 2) - pauseLayout.height / 2);
         batch.end();
     }
 
     private void updateGameOver(float delta) {
         stage.act(delta);
         batch.begin();
-        AssetManager.font.draw(batch, textLayout, (Settings.GAME_WIDTH - textLayout.width) / 2, (Settings.GAME_HEIGHT - textLayout.height) / 2);
+        Assets.font.draw(batch, textLayout, (Settings.GAME_WIDTH - textLayout.width) / 2, (Settings.GAME_HEIGHT - textLayout.height) / 2);
         // Si hi ha hagut col·lisió: Reproduïm l'explosió i posem l'estat a GameOver
-        batch.draw(AssetManager.explosionAnim.getKeyFrame(explosionTime, false), (spacecraft.getX() + spacecraft.getWidth() / 2) - 32, spacecraft.getY() + spacecraft.getHeight() / 2 - 32, 64, 64);
+        batch.draw(Assets.explosionAnim.getKeyFrame(explosionTime, false), (spacecraft.getX() + spacecraft.getWidth() / 2) - 32, spacecraft.getY() + spacecraft.getHeight() / 2 - 32, 64, 64);
         batch.end();
         explosionTime += delta;
     }
@@ -227,7 +227,7 @@ public class GameScreen implements Screen {
     public void reset() {
 
         // Posem el text d'inici
-        textLayout.setText(AssetManager.font, "Are you\nready?");
+        textLayout.setText(Assets.font, "Are you\nready?");
         // Cridem als restart dels elements.
         spacecraft.reset();
         scrollHandler.reset();
@@ -253,7 +253,7 @@ public class GameScreen implements Screen {
         //Es truquen els mètodes pause dels actors que parpallejaràn
         this.getSpacecraft().pause();
         //Disminuim el volum de la música
-        AssetManager.music.setVolume(.05f);
+        Assets.music.setVolume(.05f);
     }
 
     //TODO EXERCICI 2 : Quan es surt de l'estat de pausa
@@ -266,7 +266,7 @@ public class GameScreen implements Screen {
         this.getPauseButton().setStatus(Settings.Status.SHOWN);
         this.fireButton.setStatus(Settings.Status.SHOWN);
         //Tornem deixar el volum de la música com estaba
-        AssetManager.music.setVolume(.2f);
+        Assets.music.setVolume(.2f);
     }
 
 

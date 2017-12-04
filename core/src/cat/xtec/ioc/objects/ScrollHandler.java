@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Random;
 
-import cat.xtec.ioc.helpers.AssetManager;
+import cat.xtec.ioc.helpers.Assets;
 import cat.xtec.ioc.utils.Methods;
 import cat.xtec.ioc.utils.Settings;
 
@@ -118,7 +118,7 @@ public class ScrollHandler extends Group {
                     removeActor(laser);
                     llistaLaser.removeValue(laser, true);
                     asteroids.removeValue(asteroid, true);
-                    AssetManager.explosionSound.play();
+                    Assets.explosionSound.play();
                     return  asteroid;
                 }
             }
