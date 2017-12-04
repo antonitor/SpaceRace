@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.utils.Settings.Status;
@@ -13,7 +14,7 @@ import cat.xtec.ioc.utils.Settings.Status;
  * Created by Toni on 29/11/2017.
  */
 
-public class FireButton extends Actor{
+public class FireButton extends Image {
     // Paràmetres del botó fire
     private Vector2 position;
     private int width, height;

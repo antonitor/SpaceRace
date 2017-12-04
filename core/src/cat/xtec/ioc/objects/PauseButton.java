@@ -3,8 +3,8 @@ package cat.xtec.ioc.objects;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.utils.Settings.Status;
@@ -15,7 +15,7 @@ import cat.xtec.ioc.utils.Settings.Status;
 
 //TODO EXERCICI 2 - Actor que defineix el botó pause. Te dos estats: SHOWN i HIDDEN
 
-public class PauseButton extends Actor {
+public class PauseButton extends Image {
 
     // Paràmetres del botó pause
     private Vector2 position;
