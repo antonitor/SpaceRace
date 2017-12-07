@@ -182,26 +182,20 @@ public class GameScreen implements Screen {
             asteroid = null;
         }
 
-        //TODO EXERCICI 3 b) - Quan el temps d'explosió excedeix el necessari per reproduïr l'explosió,
-        //esborrem l'asteroide i el temporitzador de les seves corresponents llistes.
-        for (int i = 0; i < explosionsTimes.size; i++) {
-            if (explosionsTimes.get(i) > EXPLOSION_FRAME_DURATION * EXPLOSION_FRAMES) {
-                explosiveAsteroid.removeIndex(i);
-                explosionsTimes.removeIndex(i);
-            }
-        }
-
-
         //TODO EXERCICI 3 b) Per cada asteroide enregistrat a la llista explosiveAsteroid, reproduím un cop
         //l'anmimació d'explosió en la posició d'aquest.
         for(int i = 0; i <  explosiveAsteroid.size; i++) {
-            Asteroid explosive = explosiveAsteroid.get(i);
-            batch.begin();
-            batch.draw(Assets.explosionAnim.getKeyFrame(explosionsTimes.get(i), false), (explosive.getX() + explosive.getWidth() / 2) - 32, explosive.getY() + explosive.getHeight() / 2 - 32, 64, 64);
-            batch.end();
-            explosionsTimes.set(i, explosionsTimes.get(i) + delta);
-            if (explosionsTimes.get(i) > 0f) {
-                Gdx.app.log("Explosion Time nº" + i + ": ", "" + explosionsTimes.get(i));
+            //Quan el temps d'explosió excedeix el necessari per reproduïr l'explosió,
+            //esborrem l'asteroide i el temporitzador de les seves corresponents llistes.
+            if (explosionsTimes.get(i) > EXPLOSION_FRAME_DURATION * EXPLOSION_FRAMES) {
+                explosiveAsteroid.removeIndex(i);
+                explosionsTimes.removeIndex(i);
+            } else {
+                Asteroid explosive = explosiveAsteroid.get(i);
+                batch.begin();
+                batch.draw(Assets.explosionAnim.getKeyFrame(explosionsTimes.get(i), false), explosive.getX(), explosive.getY(), explosive.getWidth(), explosive.getHeight());
+                batch.end();
+                explosionsTimes.set(i, explosionsTimes.get(i) + delta);
             }
         }
     }

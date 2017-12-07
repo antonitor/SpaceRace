@@ -142,7 +142,7 @@ public class Assets {
 
         //TODO EXERCICI 3 b) - Sprite del botó fire
         /*******************************FIRE***************************************/
-        fireButton = atlas.findRegion(Settings.FIRE_BUTTON);
+        fireButton = atlas.findRegion(Settings.FIRE_BUTTON2);
         fireButton.flip(false, true);
 
         // TODO EXERCICI 3 b) - Sprite del laser i so

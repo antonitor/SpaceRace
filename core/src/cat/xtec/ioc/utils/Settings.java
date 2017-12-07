@@ -38,7 +38,7 @@ public class Settings {
 
     //TODO EXERCICI 3 a) - Nombre màxim d'axteroides
     public static int MAX_ASTEROID_NUMBER = 4;
-    public static final float MAX_ASTEROID_INTERVAL = 2f;
+    public static final float MAX_ASTEROID_INTERVAL = 1.5f;
     public static final float MIN_ASTEROID_INTERVAL = 1f;
 
     //TODO EXERCICI 3 b) - Propietats del laser
@@ -68,6 +68,7 @@ public class Settings {
     public static final java.lang.String BACKGROUND = "background";
     public static final java.lang.String PAUSE_BUTTON = "pause";
     public static final java.lang.String FIRE_BUTTON = "fire";
+    public static final java.lang.String FIRE_BUTTON2 = "fire2";
     public static final java.lang.String LASER = "laser";
     public static final java.lang.String LASER2 = "laser2";
 
