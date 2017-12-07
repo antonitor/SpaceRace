@@ -58,7 +58,7 @@ public class Settings {
     }
 
 
-    //TODO EXTRA - TEXTURE ATLAS
+    //TODO EXTRA - NOM DE LES IMATGES AL TEXTURE ATLAS
     public static final String ATLAS = "images/spacerace.pack.atlas";
     public static String ASTEROID = "asteroid";
     public static final java.lang.String SPACECRAFT = "spacecraft";
